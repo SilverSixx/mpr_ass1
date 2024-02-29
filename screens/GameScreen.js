@@ -1,11 +1,6 @@
 import React from "react";
 import { StatusBar } from "expo-status-bar";
-import {
-  StyleSheet,
-  View,
-  SafeAreaView,
-  ScrollView,
-} from "react-native";
+import { StyleSheet, View, SafeAreaView, ScrollView } from "react-native";
 import Constants from "../constants/Constants";
 import { useState, useEffect } from "react";
 import Rectangular from "../components/Rectangular";
@@ -194,7 +189,11 @@ const GameScreen = () => {
               .sort((a, b) => b.max - a.max)
               .reverse()
               .map((guess, index) => (
-                <Guess key={index} min={guess.min} max={guess.max}></Guess>
+                <Guess
+                  index={guesses.length - index}
+                  min={guess.min}
+                  max={guess.max}
+                />
               ))}
           </ScrollView>
         )}
@@ -207,7 +206,7 @@ const GameScreen = () => {
           />
           <GameText
             type={"winDetails"}
-            textContent={`You took ${guesses.length + 1} guesses to find it.`}
+            textContent={`You took ${guesses.length} guesses to find it.`}
           />
           <View style={styles.buttonContainer}>
             <ScreenButton

@@ -2,7 +2,7 @@ import { StyleSheet, View, Text } from "react-native";
 import Constants from "../constants/Constants";
 import GameText from "./GameText";
 
-const Guess = ({ min, max }) => {
+const Guess = ({ index, min, max }) => {
   const styles = StyleSheet.create({
     container: {
       borderColor: Constants.COLORS.BLACK,
@@ -20,10 +20,10 @@ const Guess = ({ min, max }) => {
 
   return (
     <View style={styles.container}>
-      <GameText type={"content"} textContent={min} />
-      <GameText type={"content"} textContent={max} />
+      <GameText type={"content"} textContent={`#${index}`} />
+      <GameText type={"content"} textContent={`${min} - ${max}`} />
     </View>
   );
-}
+};
 
 export default Guess;
