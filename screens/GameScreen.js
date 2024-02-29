@@ -20,6 +20,7 @@ const GameScreen = () => {
   const [min, setMin] = useState(0);
   const [max, setMax] = useState(99);
   const [guesses, setGuesses] = useState([]); // [min, max]
+
   const [randomNum, setRandomNum] = useState(() => {
     return Math.floor(Math.random() * (max - min + 1)) + min;
   });
@@ -28,6 +29,14 @@ const GameScreen = () => {
   const [canDecrease, setCanDecrease] = useState();
   const [canWin, setCanWin] = useState();
   const [isToastVisible, setIsToastVisible] = useState(false);
+
+  const randNum = (min, max, r) => {
+    let random = Math.floor(Math.random() * (max - min + 1)) + min;
+    while (random === r) {
+      random = Math.floor(Math.random() * (max - min + 1)) + min;
+    }
+    return random;
+  };
 
   useEffect(() => {
     const updateGameState = () => {
@@ -40,9 +49,7 @@ const GameScreen = () => {
 
   const increaseNumber = () => {
     setMin(randomNum);
-    setRandomNum(
-      () => Math.floor(Math.random() * (max - randomNum + 1)) + randomNum
-    );
+    setRandomNum(randNum(randomNum, max, randomNum));
     setGuesses([
       ...guesses,
       {
@@ -53,8 +60,8 @@ const GameScreen = () => {
   };
 
   const decreaseNumber = () => {
-    setMax(randomNum);
-    setRandomNum(() => Math.floor(Math.random() * (randomNum - min + 1)) + min);
+    setMax(randomNum);;
+    setRandomNum(randNum(min, randomNum, randomNum));
     setGuesses([
       ...guesses,
       {
@@ -190,6 +197,7 @@ const GameScreen = () => {
               .reverse()
               .map((guess, index) => (
                 <Guess
+                  key={index}
                   index={guesses.length - index}
                   min={guess.min}
                   max={guess.max}
